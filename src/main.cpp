@@ -15,6 +15,7 @@ ez::Drive chassis(
     4.125,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     360);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
+pros::Task Lb_Task(lbTask);
 // Uncomment the trackers you're using here!
 // - `8` and `9` are smart ports (making these negative will reverse the sensor)
 //  - you should get positive values on the encoders going FORWARD and RIGHT
@@ -77,6 +78,10 @@ void initialize() {
   // Initialize chassis and auton selector
   chassis.initialize();
   ez::as::initialize();
+
+  lb.tare_position();
+  lbPID.exit_condition_set(80, 50, 300, 150, 500, 500);
+
   master.rumble(chassis.drive_imu_calibrated() ? "." : "---");
 }
 
@@ -113,6 +118,8 @@ void competition_initialize() {
  * will be stopped. Re-enabling the robot will restart the task, not re-start it
  * from where it left off.
  */
+int countController = 0;
+
 void autonomous() {
   chassis.pid_targets_reset();                // Resets PID targets to 0
   chassis.drive_imu_reset();                  // Reset gyro position to 0
@@ -269,6 +276,25 @@ void opcontrol() {
     */
     setIntake((master.get_digital(DIGITAL_R1)-master.get_digital(DIGITAL_R2))*127);
     
+    if(master.get_digital(DIGITAL_A)){
+      Clamp1.toggle();
+    }
+    if(master.get_digital(DIGITAL_B)){
+      Doinker1.toggle();
+    }
+    
+    if(master.get_digital_new_press(DIGITAL_RIGHT)){
+      lbPID.target_set(500);
+    }
+    else if(master.get_digital(DIGITAL_DOWN)){
+      lbPID.target_set(0);
+    }
+
+    if(!(countController %25)){
+      master.print(0,0,"%lf", lb.get_position());
+    }
+    countController++;
+
     pros::delay(ez::util::DELAY_TIME);  // This is used for timer calculations!  Keep this ez::util::DELAY_TIME
   }
 }

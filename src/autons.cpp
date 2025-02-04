@@ -48,6 +48,67 @@ void default_constants() {
   chassis.pid_angle_behavior_set(ez::shortest);  // Changes the default behavior for turning, this defaults it to the shortest path there
 }
 
+void test(){
+
+}
+
+void leftSide(){
+
+}
+
+void rightSide(){
+
+}
+
+void soloWP(){
+
+}
+
+void Skills(){
+  
+}
+
+
+//tuner autons
+void drive_48(){
+  chassis.pid_drive_set(48_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+}
+void drive_96(){
+  chassis.pid_drive_set(96_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+}
+void driveBack_48(){
+  chassis.pid_drive_set(48_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-48_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+}
+void driveBack_96(){
+  chassis.pid_drive_set(96_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+  chassis.pid_drive_set(-96_in, DRIVE_SPEED, true);
+  chassis.pid_wait();
+}
+void turn_90(){
+  chassis.pid_turn_set(90_deg, TURN_SPEED);
+  chassis.pid_wait();
+}
+void turn_180(){
+  chassis.pid_turn_set(180_deg, TURN_SPEED);
+  chassis.pid_wait();
+}
+void turn_360(){
+  chassis.pid_turn_set(360_deg, TURN_SPEED);
+  chassis.pid_wait();
+}
+void turnBack(){
+  chassis.pid_turn_set(360_deg, TURN_SPEED);
+  chassis.pid_wait();
+  chassis.pid_turn_set(0_deg, TURN_SPEED);
+  chassis.pid_wait();
+}
+/*
 ///
 // Drive Example
 ///
@@ -376,3 +437,5 @@ void measure_offsets() {
 // . . .
 // Make your own autonomous functions here!
 // . . .
+
+*/

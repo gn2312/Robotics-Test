@@ -12,7 +12,7 @@ ez::Drive chassis(
     {-4, -5, -6},  // Right Chassis Ports (negative port will reverse it!)
 
     7,      // IMU Port
-    4.125,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
+    2.75,  // Wheel Diameter (Remember, 4" wheels without screw holes are actually 4.125!)
     360);   // Wheel RPM = cartridge * (motor gear / wheel gear)
 
 pros::Task Lb_Task(lbTask);
@@ -59,6 +59,22 @@ void initialize() {
 
   // Autonomous Selector using LLEMU
   ez::as::auton_selector.autons_add({
+    Auton("left Side",leftSide),
+    Auton("right Side",rightSide),
+    Auton("Solo wp", soloWP),
+    Auton("skills",Skills),
+    Auton("test",test),
+
+    Auton("drive 48", drive_48),
+    Auton("drive 96", drive_96),
+    Auton("drive back 48", driveBack_48),
+    Auton("drive back 96", driveBack_96),
+    Auton("turn 90", turn_90),
+    Auton("turn 180", turn_180),
+    Auton("turn 360", turn_360),
+    Auton("turn back", turnBack),
+
+    /*
       {"Drive\n\nDrive forward and come back", drive_example},
       {"Turn\n\nTurn 3 times.", turn_example},
       {"Drive and Turn\n\nDrive forward, turn, come back", drive_and_turn},
@@ -73,6 +89,7 @@ void initialize() {
       {"Boomerang\n\nGo to (0, 24, 45) then come back to (0, 0, 0)", odom_boomerang_example},
       {"Boomerang Pure Pursuit\n\nGo to (0, 24, 45) on the way to (24, 24) then come back to (0, 0, 0)", odom_boomerang_injected_pure_pursuit_example},
       {"Measure Offsets\n\nThis will turn the robot a bunch of times and calculate your offsets for your tracking wheels.", measure_offsets},
+      */
   });
 
   // Initialize chassis and auton selector
